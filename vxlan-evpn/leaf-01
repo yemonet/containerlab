@@ -1,0 +1,191 @@
+! Startup-config last modified at Wed Sep 24 12:50:42 2025 by root
+! device: leaf-01 (cEOSLab, EOS-4.34.2F-43232954.4342F.1 (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$X9C/W5zWasnufuZz$ctTdtYjAY4MIzEFsSCSPbDwLqv4TK/8xwPWixP9os3APnoeVj2W5WizTxBaXXFhY5EwoqaMREEVDkkn80KDpW/
+!
+management api http-commands
+   no shutdown
+!
+switchport default mode routed
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname leaf-01
+!
+spanning-tree mode mstp
+no spanning-tree vlan-id 4094
+!
+spanning-tree mst configuration
+   instance 1 vlan  1-4094
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 210
+   name V_VM_210
+!
+vlan 220
+   name V_VM_220
+!
+vlan 230
+   name V_VM_230
+!
+vrf instance Blue
+!
+vrf instance Green
+!
+vrf instance MGMT
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   description PEER>>SP1
+   mtu 9214
+   no switchport
+   ip address 10.10.250.1/31
+!
+interface Ethernet2
+   description PEER>>SP2
+   mtu 9214
+   no switchport
+   ip address 10.10.250.3/31
+!
+interface Ethernet3
+   description H1
+   switchport access vlan 220
+   switchport trunk allowed vlan none
+   switchport
+   spanning-tree portfast edge
+!
+interface Loopback0
+   description EVPN-LF1-UNIQUE
+   ip address 10.10.255.11/32
+!
+interface Management0
+   vrf MGMT
+   ip address 172.20.20.5/24
+   ipv6 address 3fff:172:20:20::5/64
+!
+interface Vlan210
+   description VM_210
+   ip address virtual 10.10.210.1/24
+!
+interface Vlan220
+   description VM_220
+   vrf Blue
+   ip address virtual 10.10.220.1/24
+!
+interface Vlan230
+   description VM_230
+   vrf Green
+   ip address virtual 10.10.230.1/24
+!
+interface Vxlan1
+   vxlan source-interface Loopback0
+   vxlan udp-port 4789
+   vxlan vlan 210-239 vni 10210-10239
+   vxlan vrf Blue vni 1020
+   vxlan vrf Green vni 1030
+   vxlan vrf default vni 1010
+!
+ip virtual-router mac-address 00:1c:73:ab:cd:ef
+!
+ip routing
+ip routing vrf Blue
+ip routing vrf Green
+no ip routing vrf MGMT
+!
+ip prefix-list PL-LOOPBACKS
+   seq 10 permit 10.10.255.0/24 eq 32
+!
+route-map RM-LOOPBACKS permit 10
+   match ip address prefix-list PL-LOOPBACKS
+!
+router bgp 65001
+   router-id 10.10.255.11
+   update wait-install
+   no bgp default ipv4-unicast
+   maximum-paths 2 ecmp 2
+   neighbor OVERLAY peer group
+   neighbor OVERLAY remote-as 64600
+   neighbor OVERLAY update-source Loopback0
+   neighbor OVERLAY bfd
+   neighbor OVERLAY ebgp-multihop 3
+   neighbor OVERLAY send-community
+   neighbor OVERLAY maximum-routes 0 warning-limit 12000
+   neighbor UNDERLAY peer group
+   neighbor UNDERLAY remote-as 64600
+   neighbor UNDERLAY send-community
+   neighbor UNDERLAY maximum-routes 12000
+   neighbor 10.10.250.0 peer group UNDERLAY
+   neighbor 10.10.250.0 description SP1
+   neighbor 10.10.250.2 peer group UNDERLAY
+   neighbor 10.10.250.2 description SP2
+   neighbor 10.10.255.1 peer group OVERLAY
+   neighbor 10.10.255.1 description SP1
+   neighbor 10.10.255.2 peer group OVERLAY
+   neighbor 10.10.255.2 description SP2
+   redistribute connected
+   !
+   vlan-aware-bundle V210-219
+      rd 10.10.255.11:210
+      route-target both 10010:1
+      redistribute learned
+      vlan 210-219
+   !
+   vlan-aware-bundle V220-229
+      rd 10.10.255.11:220
+      route-target both 10020:2
+      redistribute learned
+      vlan 220-229
+   !
+   vlan-aware-bundle V230-239
+      rd 10.10.255.11:230
+      route-target both 10030:3
+      redistribute learned
+      vlan 230-239
+   !
+   address-family evpn
+      neighbor OVERLAY activate
+   !
+   address-family ipv4
+      neighbor UNDERLAY activate
+   !
+   vrf Blue
+      rd 10.10.255.11:1020
+      route-target import evpn 1020:1020
+      route-target export evpn 1020:1020
+      router-id 10.10.255.11
+      redistribute connected
+   !
+   vrf Green
+      rd 10.10.255.11:1030
+      route-target import evpn 1030:1030
+      route-target export evpn 1030:1030
+      router-id 10.10.255.11
+      redistribute connected
+   !
+   vrf default
+      rd 10.10.255.11:1010
+      route-target import evpn 1010:1010
+      route-target export evpn 1010:1010
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end
