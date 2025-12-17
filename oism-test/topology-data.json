@@ -1,0 +1,235 @@
+{
+  "name": "oism-test",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "",
+      "mgmt": {
+        "network": "clab",
+        "bridge": "br-071bedbce79c",
+        "ipv4-subnet": "172.20.20.0/24",
+        "ipv4-gw": "172.20.20.1",
+        "ipv6-subnet": "3fff:172:20:20::/64",
+        "ipv6-gw": "3fff:172:20:20::1",
+        "mtu": 1500,
+        "external-access": true
+      }
+    }
+  },
+  "ssh-pub-keys": [],
+  "nodes": {
+    "host-1": {
+      "index": "0",
+      "shortname": "host-1",
+      "longname": "host-1",
+      "fqdn": "host-1.oism-test.io",
+      "group": "",
+      "labdir": "/root/clabs/OISM-1/clab-oism-test/host-1",
+      "kind": "linux",
+      "image": "ubuntu:20.04",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::2",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-071bedbce79c",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/clabs/OISM-1/clab-oism-test/host-1",
+        "clab-node-longname": "host-1",
+        "clab-node-name": "host-1",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/root/clabs/OISM-1/topology-oism-test.yaml",
+        "containerlab": "oism-test"
+      },
+      "port-bindings": [
+      ]
+    },
+    "host-2": {
+      "index": "1",
+      "shortname": "host-2",
+      "longname": "host-2",
+      "fqdn": "host-2.oism-test.io",
+      "group": "",
+      "labdir": "/root/clabs/OISM-1/clab-oism-test/host-2",
+      "kind": "linux",
+      "image": "ubuntu:20.04",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.20.20.4",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::4",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-071bedbce79c",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/root/clabs/OISM-1/clab-oism-test/host-2",
+        "clab-node-longname": "host-2",
+        "clab-node-name": "host-2",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/root/clabs/OISM-1/topology-oism-test.yaml",
+        "containerlab": "oism-test"
+      },
+      "port-bindings": [
+      ]
+    },
+    "spine": {
+      "index": "2",
+      "shortname": "spine",
+      "longname": "spine",
+      "fqdn": "spine.oism-test.io",
+      "group": "",
+      "labdir": "/root/clabs/OISM-1/clab-oism-test/spine",
+      "kind": "ceos",
+      "image": "ceos:4.34.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::3",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:06:63:91",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-071bedbce79c",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/root/clabs/OISM-1/clab-oism-test/spine",
+        "clab-node-longname": "spine",
+        "clab-node-name": "spine",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/root/clabs/OISM-1/topology-oism-test.yaml",
+        "containerlab": "oism-test"
+      },
+      "port-bindings": [
+      ]
+    },
+    "vtep-1": {
+      "index": "3",
+      "shortname": "vtep-1",
+      "longname": "vtep-1",
+      "fqdn": "vtep-1.oism-test.io",
+      "group": "",
+      "labdir": "/root/clabs/OISM-1/clab-oism-test/vtep-1",
+      "kind": "ceos",
+      "image": "ceos:4.34.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::5",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:c1:c0:08",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-071bedbce79c",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/root/clabs/OISM-1/clab-oism-test/vtep-1",
+        "clab-node-longname": "vtep-1",
+        "clab-node-name": "vtep-1",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/root/clabs/OISM-1/topology-oism-test.yaml",
+        "containerlab": "oism-test"
+      },
+      "port-bindings": [
+      ]
+    },
+    "vtep-2": {
+      "index": "4",
+      "shortname": "vtep-2",
+      "longname": "vtep-2",
+      "fqdn": "vtep-2.oism-test.io",
+      "group": "",
+      "labdir": "/root/clabs/OISM-1/clab-oism-test/vtep-2",
+      "kind": "ceos",
+      "image": "ceos:4.34.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.20.20.6",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "3fff:172:20:20::6",
+      "mgmt-ipv6-prefix-length": 64,
+      "mac-address": "00:1c:73:44:e7:68",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-071bedbce79c",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/root/clabs/OISM-1/clab-oism-test/vtep-2",
+        "clab-node-longname": "vtep-2",
+        "clab-node-name": "vtep-2",
+        "clab-node-type": "",
+        "clab-owner": "root",
+        "clab-topo-file": "/root/clabs/OISM-1/topology-oism-test.yaml",
+        "containerlab": "oism-test"
+      },
+      "port-bindings": [
+      ]
+    }
+  },
+  "links": [
+    {
+      "a": {
+        "node": "spine",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:37:47:0f",
+        "peer": "z"
+      },
+      "z": {
+        "node": "vtep-1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:4b:cc:ba",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "spine",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:bc:d0:a3",
+        "peer": "z"
+      },
+      "z": {
+        "node": "vtep-2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:bb:ab:7b",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "host-1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:e9:8d:64",
+        "peer": "z"
+      },
+      "z": {
+        "node": "vtep-1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:eb:91:1c",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "host-2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:2c:d3:58",
+        "peer": "z"
+      },
+      "z": {
+        "node": "vtep-2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:36:aa:99",
+        "peer": "a"
+      }
+    }
+  ]
+}
