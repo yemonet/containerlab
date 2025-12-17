@@ -1,0 +1,69 @@
+! Startup-config last modified at Wed Sep 24 12:50:38 2025 by root
+! device: h-02 (cEOSLab, EOS-4.34.2F-43232954.4342F.1 (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$OoSaKhvnMdfnkMkP$gOOhvXepy6C88uI1nD0wKB.58UvXY9z9tQDDaAJJUruHPHpO98powKnBWtJv91Uai8qfNBAYSc7mOamt6HUA9.
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname h-02
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vlan 220
+!
+vrf instance MGMT
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Port-Channel1
+   switchport access vlan 220
+   spanning-tree portfast edge
+!
+interface Ethernet1
+   switchport access vlan 220
+   channel-group 1 mode active
+!
+interface Ethernet2
+   switchport access vlan 220
+   channel-group 1 mode active
+!
+interface Management0
+   vrf MGMT
+   ip address 172.20.20.2/24
+   ipv6 address 3fff:172:20:20::2/64
+!
+interface Vlan220
+   ip address 10.10.220.12/24
+!
+no ip routing
+no ip routing vrf MGMT
+!
+ip route vrf MGMT 0.0.0.0/0 172.20.20.1
+!
+ipv6 route vrf MGMT ::/0 3fff:172:20:20::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end
