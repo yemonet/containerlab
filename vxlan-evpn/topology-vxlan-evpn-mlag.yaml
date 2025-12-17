@@ -1,0 +1,41 @@
+name: vxlan-evpn-arista-lab
+prefix: ""
+topology:
+  kinds:
+    ceos:
+      image: ceos:4.34.2F
+  nodes:
+    spine-01:
+      kind: ceos
+    spine-02:
+      kind: ceos
+    leaf-01:
+      kind: ceos
+    leaf-02:
+      kind: ceos
+    leaf-03:
+      kind: ceos 
+    h-01:
+      kind: ceos
+    h-02:
+      kind: ceos
+  links:
+    # spine-01 links
+    - endpoints: ["spine-01:eth1", "leaf-01:eth1"]
+    - endpoints: ["spine-01:eth2", "leaf-02:eth1"]
+    - endpoints: ["spine-01:eth3", "leaf-03:eth1"]
+
+    # spine-02 links
+    - endpoints: ["spine-02:eth1", "leaf-01:eth2"]
+    - endpoints: ["spine-02:eth2", "leaf-02:eth2"]
+    - endpoints: ["spine-02:eth3", "leaf-03:eth2"]
+
+    # host uplinks
+    - endpoints: ["h-01:eth1", "leaf-01:eth3"]
+    - endpoints: ["h-02:eth1", "leaf-02:eth3"]
+    - endpoints: ["h-02:eth2", "leaf-03:eth3"]
+
+    # mlag
+    - endpoints: ["leaf-02:eth47", "leaf-03:eth47"]
+    - endpoints: ["leaf-02:eth48", "leaf-03:eth48"]
+
