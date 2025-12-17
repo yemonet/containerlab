@@ -1,0 +1,55 @@
+! Startup-config last modified at Mon Sep 22 10:19:01 2025 by root
+! device: vtep-3 (cEOSLab, EOS-4.34.2F-43232954.4342F.1 (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$S9GnM2Rk6KPBBwGe$IGThNupjcBAjLbTqRBz5JYApCFqbQb172jzgvKq9lUSIyj.AyO6W8VBgMmbyNwTLQcwWKjlDOV2Ocz43xP3mO/
+!
+management api http-commands
+   no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname vtep-3
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance MGMT
+!
+management api gnmi
+   transport grpc default
+!
+management api netconf
+   transport ssh default
+!
+interface Ethernet1
+   no switchport
+   ip address 54.1.1.1/30
+!
+interface Loopback0
+   ip address 3.3.3.3/32
+!
+interface Loopback1
+   ip address 30.30.30.30/32
+!
+interface Management0
+   vrf MGMT
+   ip address 172.20.20.6/24
+   ipv6 address 3fff:172:20:20::6/64
+!
+ip routing
+ip routing vrf MGMT
+!
+ip route vrf MGMT 0.0.0.0/0 172.20.20.1
+!
+ipv6 route vrf MGMT ::/0 3fff:172:20:20::1
+!
+end
