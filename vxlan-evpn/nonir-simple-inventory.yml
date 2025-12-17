@@ -1,0 +1,36 @@
+---
+h-01:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.8
+h-02:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.2
+leaf-01:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.5
+leaf-02:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.4
+leaf-03:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.3
+spine-01:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.6
+spine-02:
+    username: admin
+    password: admin
+    platform: ceos
+    hostname: 172.20.20.7
